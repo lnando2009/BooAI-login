@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BloomAI — Entrar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #7A8F5A;
+    --sage:   #A7C58B;
+    --peach:  #F2A17A;
+    --terra:  #E07A4F;
+    --cream:  #FAF6EF;
+    --dark:   #2C2A1E;
+    --mid:    #5C5846;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    background: var(--dark);
+    overflow: hidden;
+  }
+
+  /* LEFT PANEL — ilustração */
+  .panel-left {
+    flex: 1.1;
+    position: relative;
+    background: #1E1D14;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* camada de cor de fundo */
+  .panel-left::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 30% 40%, rgba(122,143,90,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 80% 75%, rgba(224,122,79,0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 60% 10%, rgba(167,197,139,0.1) 0%, transparent 55%);
+    pointer-events: none;
+  }
+
+  /* grain overlay */
+  .panel-left::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 2;
+    mix-blend-mode: overlay;
+  }
+
+  .floral-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .panel-left-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 3rem;
+    max-width: 460px;
+  }
+
+  .left-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .left-logo span { color: var(--sage); font-style: italic; }
+
+  .left-brand {
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 3rem;
+  }
+
+  .left-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.65rem;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+
+  .left-quote-sub {
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.38);
+    letter-spacing: 0.06em;
+    font-weight: 300;
+  }
+
+  .left-badges {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 3rem;
+  }
+  .left-badge {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.04em;
+  }
+  .left-badge b { color: var(--sage); font-weight: 500; }
+
+  /* RIGHT PANEL — formulário */
+  .panel-right {
+    width: 440px;
+    min-height: 100vh;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 3.5rem;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* borda esquerda decorativa */
+  .panel-right::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(122,143,90,0.3), transparent);
+  }
+
+  .form-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--terra);
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .form-eyebrow::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--terra);
+  }
+
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+  .form-title em { font-style: italic; color: var(--forest); }
+
+  .form-sub {
+    font-size: 0.85rem;
+    color: var(--mid);
+    font-weight: 300;
+    margin-bottom: 2.4rem;
+    line-height: 1.6;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.1rem;
+  }
+  .field-group label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--mid);
+    font-weight: 400;
+  }
+
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .input-icon {
+    position: absolute;
+    left: 1rem;
+    font-size: 1rem;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .field-group input {
+    width: 100%;
+    border: 1.5px solid rgba(122,143,90,0.2);
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem 0.85rem 2.8rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--dark);
+    background: white;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field-group input::placeholder { color: rgba(92,88,70,0.4); }
+  .field-group input:focus {
+    border-color: var(--forest);
+    box-shadow: 0 0 0 3px rgba(122,143,90,0.1);
+  }
+
+  .toggle-pass {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+    color: var(--mid);
+    padding: 0;
+    line-height: 1;
+  }
+  .toggle-pass:hover { opacity: 0.8; }
+
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.8rem;
+  }
+
+  .remember {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+  }
+  .remember input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--forest);
+    cursor: pointer;
+  }
+  .remember span {
+    font-size: 0.8rem;
+    color: var(--mid);
+    font-weight: 300;
+  }
+
+  .forgot {
+    font-size: 0.8rem;
+    color: var(--terra);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.2s;
+  }
+  .forgot:hover { color: var(--forest); }
+
+  .btn-login {
+    width: 100%;
+    background: var(--forest);
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.1s;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-login::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0);
+    transition: background 0.2s;
+  }
+  .btn-login:hover { background: var(--dark); }
+  .btn-login:active { transform: scale(0.985); }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(122,143,90,0.15);
+  }
+  .divider span { font-size: 0.75rem; color: var(--mid); opacity: 0.6; white-space: nowrap; }
+
+  .btn-google {
+    width: 100%;
+    background: white;
+    color: var(--dark);
+    border: 1.5px solid rgba(122,143,90,0.2);
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-google:hover { border-color: var(--forest); background: #f5f8f1; }
+  .btn-google svg { width: 18px; height: 18px; }
+
+  .signup-link {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.83rem;
+    color: var(--mid);
+    font-weight: 300;
+  }
+  .signup-link a {
+    color: var(--terra);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .signup-link a:hover { color: var(--forest); }
+
+  /* flor decorativa canto direito */
+  .deco-flower {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    opacity: 0.06;
+    width: 180px;
+    pointer-events: none;
+  }
+
+  /* toast */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--dark);
+    color: white;
+    padding: 0.9rem 1.4rem;
+    border-radius: 0.9rem;
+    font-size: 0.85rem;
+    font-family: 'DM Sans', sans-serif;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(.34,1.56,.64,1);
+    z-index: 999;
+    border-left: 3px solid var(--sage);
+    max-width: 280px;
+    line-height: 1.5;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* animações de entrada */
+  @keyframes slideRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slideLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .panel-right { animation: slideRight 0.6s cubic-bezier(.16,1,.3,1) both; }
+  .panel-left-content { animation: slideLeft 0.7s cubic-bezier(.16,1,.3,1) 0.1s both; }
+  .floral-bg { animation: fadeIn 1.2s ease 0.2s both; }
+</style>
+</head>
+<body>
+
+<!-- PAINEL ESQUERDO -->
+<div class="panel-left">
+  <!-- SVG floral de fundo -->
+  <svg class="floral-bg" viewBox="0 0 800 900" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+
+    <!-- galhos principais -->
+    <path d="M-50 900 Q100 700 200 550 Q280 430 320 280 Q350 180 400 100" stroke="#A7C58B" stroke-width="2" fill="none" opacity="0.25"/>
+    <path d="M850 950 Q700 780 650 620 Q600 480 520 350 Q460 250 430 120" stroke="#7A8F5A" stroke-width="1.5" fill="none" opacity="0.2"/>
+    <path d="M50 950 Q120 820 180 700 Q240 580 270 460" stroke="#A7C58B" stroke-width="1.2" fill="none" opacity="0.15"/>
+
+    <!-- galhos secundários -->
+    <path d="M200 550 Q150 500 100 520" stroke="#A7C58B" stroke-width="1.2" fill="none" opacity="0.2"/>
+    <path d="M260 460 Q220 420 200 380" stroke="#7A8F5A" stroke-width="1" fill="none" opacity="0.18"/>
+    <path d="M320 280 Q370 250 390 200" stroke="#A7C58B" stroke-width="1" fill="none" opacity="0.2"/>
+    <path d="M650 620 Q700 580 740 600" stroke="#7A8F5A" stroke-width="1.2" fill="none" opacity="0.18"/>
+    <path d="M520 350 Q560 320 580 280" stroke="#A7C58B" stroke-width="1" fill="none" opacity="0.15"/>
+
+    <!-- folhas -->
+    <ellipse cx="95" cy="515" rx="28" ry="12" fill="#7A8F5A" opacity="0.28" transform="rotate(-30 95 515)"/>
+    <ellipse cx="115" cy="540" rx="22" ry="9" fill="#A7C58B" opacity="0.2" transform="rotate(20 115 540)"/>
+    <ellipse cx="195" cy="375" rx="24" ry="10" fill="#7A8F5A" opacity="0.22" transform="rotate(-50 195 375)"/>
+    <ellipse cx="215" cy="395" rx="18" ry="7" fill="#A7C58B" opacity="0.18" transform="rotate(30 215 395)"/>
+    <ellipse cx="370" cy="245" rx="26" ry="11" fill="#7A8F5A" opacity="0.25" transform="rotate(-20 370 245)"/>
+    <ellipse cx="395" cy="265" rx="20" ry="8" fill="#A7C58B" opacity="0.2" transform="rotate(40 395 265)"/>
+    <ellipse cx="700" cy="575" rx="26" ry="10" fill="#7A8F5A" opacity="0.22" transform="rotate(25 700 575)"/>
+    <ellipse cx="565" cy="315" rx="22" ry="9" fill="#A7C58B" opacity="0.18" transform="rotate(-35 565 315)"/>
+
+    <!-- FLOR GRANDE — centro esquerdo -->
+    <g opacity="0.55">
+      <ellipse cx="200" cy="540" rx="38" ry="12" fill="#F2A17A" transform="rotate(0 200 540)"/>
+      <ellipse cx="200" cy="540" rx="38" ry="12" fill="#F2A17A" transform="rotate(45 200 540)"/>
+      <ellipse cx="200" cy="540" rx="38" ry="12" fill="#F2A17A" transform="rotate(90 200 540)"/>
+      <ellipse cx="200" cy="540" rx="38" ry="12" fill="#F2A17A" transform="rotate(135 200 540)"/>
+      <circle cx="200" cy="540" r="18" fill="#E07A4F"/>
+      <circle cx="200" cy="540" r="10" fill="#FAF6EF" opacity="0.6"/>
+    </g>
+
+    <!-- FLOR MÉDIA — canto superior direito -->
+    <g opacity="0.45">
+      <ellipse cx="650" cy="200" rx="30" ry="10" fill="#A7C58B" transform="rotate(0 650 200)"/>
+      <ellipse cx="650" cy="200" rx="30" ry="10" fill="#A7C58B" transform="rotate(45 650 200)"/>
+      <ellipse cx="650" cy="200" rx="30" ry="10" fill="#A7C58B" transform="rotate(90 650 200)"/>
+      <ellipse cx="650" cy="200" rx="30" ry="10" fill="#A7C58B" transform="rotate(135 650 200)"/>
+      <circle cx="650" cy="200" r="14" fill="#7A8F5A"/>
+      <circle cx="650" cy="200" r="7" fill="#FAF6EF" opacity="0.5"/>
+    </g>
+
+    <!-- FLOR PEQUENA — baixo direito -->
+    <g opacity="0.4">
+      <ellipse cx="730" cy="720" rx="24" ry="8" fill="#E07A4F" transform="rotate(0 730 720)"/>
+      <ellipse cx="730" cy="720" rx="24" ry="8" fill="#E07A4F" transform="rotate(60 730 720)"/>
+      <ellipse cx="730" cy="720" rx="24" ry="8" fill="#E07A4F" transform="rotate(120 730 720)"/>
+      <circle cx="730" cy="720" r="12" fill="#F2A17A"/>
+      <circle cx="730" cy="720" r="6" fill="#FAF6EF" opacity="0.5"/>
+    </g>
+
+    <!-- FLOR ALTA — topo centro -->
+    <g opacity="0.38">
+      <ellipse cx="380" cy="110" rx="26" ry="9" fill="#F2A17A" transform="rotate(0 380 110)"/>
+      <ellipse cx="380" cy="110" rx="26" ry="9" fill="#F2A17A" transform="rotate(45 380 110)"/>
+      <ellipse cx="380" cy="110" rx="26" ry="9" fill="#F2A17A" transform="rotate(90 380 110)"/>
+      <ellipse cx="380" cy="110" rx="26" ry="9" fill="#F2A17A" transform="rotate(135 380 110)"/>
+      <circle cx="380" cy="110" r="13" fill="#E07A4F"/>
+      <circle cx="380" cy="110" r="6" fill="#FAF6EF" opacity="0.5"/>
+    </g>
+
+    <!-- botões florais espalhados -->
+    <circle cx="140" cy="440" r="8" fill="#F2A17A" opacity="0.5"/>
+    <circle cx="155" cy="460" r="5" fill="#A7C58B" opacity="0.4"/>
+    <circle cx="310" cy="200" r="7" fill="#A7C58B" opacity="0.45"/>
+    <circle cx="560" cy="310" r="9" fill="#F2A17A" opacity="0.4"/>
+    <circle cx="600" cy="450" r="6" fill="#A7C58B" opacity="0.35"/>
+    <circle cx="480" cy="600" r="8" fill="#E07A4F" opacity="0.3"/>
+    <circle cx="80" cy="680" r="6" fill="#F2A17A" opacity="0.35"/>
+    <circle cx="420" cy="400" r="5" fill="#A7C58B" opacity="0.3"/>
+
+    <!-- pontos de luz -->
+    <circle cx="250" cy="300" r="2" fill="rgba(255,255,255,0.3)"/>
+    <circle cx="500" cy="180" r="1.5" fill="rgba(255,255,255,0.25)"/>
+    <circle cx="700" cy="400" r="2" fill="rgba(255,255,255,0.2)"/>
+    <circle cx="120" cy="350" r="1.5" fill="rgba(255,255,255,0.2)"/>
+    <circle cx="600" cy="650" r="2" fill="rgba(255,255,255,0.18)"/>
+    <circle cx="350" cy="500" r="1.5" fill="rgba(255,255,255,0.15)"/>
+  </svg>
+
+  <!-- Conteúdo sobre o fundo -->
+  <div class="panel-left-content">
+    <a href="index.html" style="text-decoration:none;"><div class="left-logo">Bloom<span>AI</span></div></a>
+    <div class="left-brand">Chá do Trabalho das Flores</div>
+
+    <p class="left-quote">
+      "Flores frescas, entregues<br>nas datas que mais importam."
+    </p>
+    <p class="left-quote-sub">Nunca mais esqueça quem você ama.</p>
+
+    <div class="left-badges">
+      <div class="left-badge"><b>12k+</b> flores enviadas</div>
+      <div class="left-badge"><b>98%</b> satisfação</div>
+      <div class="left-badge"><b>0</b> datas esquecidas</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAINEL DIREITO -->
+<div class="panel-right">
+
+  <!-- flor decorativa canto -->
+  <svg class="deco-flower" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="100" cy="100" rx="80" ry="25" fill="#7A8F5A" transform="rotate(0 100 100)"/>
+    <ellipse cx="100" cy="100" rx="80" ry="25" fill="#7A8F5A" transform="rotate(45 100 100)"/>
+    <ellipse cx="100" cy="100" rx="80" ry="25" fill="#7A8F5A" transform="rotate(90 100 100)"/>
+    <ellipse cx="100" cy="100" rx="80" ry="25" fill="#7A8F5A" transform="rotate(135 100 100)"/>
+    <circle cx="100" cy="100" r="35" fill="#E07A4F"/>
+  </svg>
+
+  <div class="form-eyebrow">Bem-vindo de volta</div>
+  <h1 class="form-title">Entre na sua<br>conta <em>BloomAI</em></h1>
+  <p class="form-sub">Acesse suas datas especiais e arranjos programados.</p>
+
+  <div class="field-group">
+    <label>E-mail</label>
+    <div class="input-wrap">
+      <span class="input-icon">✉</span>
+      <input type="email" id="email" placeholder="seu@email.com" autocomplete="email">
+    </div>
+  </div>
+
+  <div class="field-group">
+    <label>Senha</label>
+    <div class="input-wrap">
+      <span class="input-icon">🔒</span>
+      <input type="password" id="pass" placeholder="••••••••" autocomplete="current-password">
+      <button class="toggle-pass" onclick="togglePass()" id="toggleBtn" type="button" title="Mostrar senha">👁</button>
+    </div>
+  </div>
+
+  <div class="form-options">
+    <label class="remember">
+      <input type="checkbox" id="remember">
+      <span>Lembrar de mim</span>
+    </label>
+    <a href="#" class="forgot">Esqueci a senha</a>
+  </div>
+
+  <button class="btn-login" onclick="handleLogin()">Entrar na conta</button>
+
+  <div class="divider"><span>ou continue com</span></div>
+
+  <button class="btn-google" onclick="showToast('🌸 Redirecionando para o Google...')">
+    <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/><path fill="none" d="M0 0h48v48H0z"/></svg>
+    Entrar com Google
+  </button>
+
+  <p class="signup-link">
+    Não tem conta? <a href="index.html">Criar conta grátis</a>
+  </p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  function togglePass() {
+    const input = document.getElementById('pass');
+    const btn = document.getElementById('toggleBtn');
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      btn.textContent = '👁';
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('email').value.trim();
+    const pass = document.getElementById('pass').value;
+    if (!email) { showToast('⚠️ Informe seu e-mail para continuar.'); return; }
+    if (!pass) { showToast('⚠️ Informe sua senha para continuar.'); return; }
+    const btn = document.querySelector('.btn-login');
+    btn.textContent = 'Entrando...';
+    btn.style.background = '#A7C58B';
+    setTimeout(() => {
+      btn.textContent = '✓ Bem-vindo de volta!';
+      btn.style.background = '#7A8F5A';
+      showToast('🌸 Login realizado com sucesso! Suas flores aguardam.');
+      setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+    }, 1400);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleLogin();
+  });
+</script>
+</body>
+</html>
